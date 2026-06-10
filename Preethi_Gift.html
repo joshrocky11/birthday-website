@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Preethi! 💖</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;0,800;1,400&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #0f051d 0%, #290b3a 50%, #4a0e4e 100%);
+            overflow-x: hidden;
+        }
+        .cursive {
+            font-family: 'Dancing Script', cursive;
+        }
+        .serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Custom animations */
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+        @keyframes float-mid {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(-3deg); }
+        }
+        @keyframes bounce-subtle {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-8px) scale(1.02); }
+        }
+        @keyframes lid-hover {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        .animate-float-slow {
+            animation: float-slow 8s ease-in-out infinite;
+        }
+        .animate-float-mid {
+            animation: float-mid 6s ease-in-out infinite;
+        }
+        .animate-gift-bounce {
+            animation: bounce-subtle 3s ease-in-out infinite;
+        }
+        .animate-lid-hover {
+            animation: lid-hover 2.5s ease-in-out infinite;
+        }
+        .sparkle-dot {
+            animation: sparkle 4s ease-in-out infinite;
+        }
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-panel-heavy {
+            background: rgba(17, 10, 28, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        /* Hide scrollbars but keep functionality */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="h-full text-white selection:bg-pink-500 selection:text-white relative">
+
+    <!-- Ambient Sparkle particles on background -->
+    <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden" id="ambient-sparkles"></div>
+
+    <!-- Active Confetti Canvas -->
+    <canvas id="confetti-canvas" class="absolute inset-0 pointer-events-none z-50 w-full h-full"></canvas>
+
+    <!-- FLOATING BALLOONS CONTAINER -->
+    <div id="balloons-container" class="absolute inset-0 pointer-events-none z-10 overflow-hidden"></div>
+
+    <!-- ========================================== -->
+    <!-- STAGE 1: GIFT WRAP OVERLAY -->
+    <!-- ========================================== -->
+    <div id="stage-gift" class="fixed inset-0 z-40 flex flex-col items-center justify-center p-4 transition-all duration-1000 bg-radial from-[#1e0730] to-[#0a0212]">
+        
+        <!-- Glowing sparkles behind gift -->
+        <div class="absolute w-[300px] h-[300px] sm:w-[450px] sm:h-[450px] bg-gradient-to-tr from-pink-500/20 to-amber-500/20 rounded-full blur-[80px] pointer-events-none animate-pulse"></div>
+
+        <!-- Greeting Intro -->
+        <div class="text-center mb-8 max-w-md z-10 animate-float-slow">
+            <span class="px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest bg-gradient-to-r from-amber-400 to-pink-500 text-purple-950 shadow-md">Sent with Love 💖</span>
+            <h2 class="serif-title text-3xl sm:text-4xl mt-4 font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-pink-200 via-amber-200 to-pink-100">For Someone Truly Special</h2>
+            <p class="text-pink-200/75 mt-2 text-sm sm:text-base px-6">We've wrapped a bundle of magic, melody, and beautiful wishes just for you.</p>
+        </div>
+
+        <!-- The 3D CSS Interactive Gift Box -->
+        <button id="gift-box-btn" class="relative group focus:outline-none z-10 animate-gift-bounce transform transition-all active:scale-95 duration-300 cursor-pointer" aria-label="Open Gift Box">
+            <!-- Sparkles orbiting the gift -->
+            <div class="absolute -inset-4 bg-gradient-to-r from-amber-400/20 via-pink-500/20 to-purple-600/20 rounded-2xl blur-xl group-hover:blur-2xl transition duration-500 opacity-75"></div>
+            
+            <div class="relative w-44 h-44 sm:w-52 sm:h-52 flex items-center justify-center">
+                <!-- Gift Lid Box -->
+                <div id="gift-lid" class="absolute -top-1 w-[104%] h-12 bg-gradient-to-r from-pink-500 to-rose-600 rounded-t-lg shadow-lg z-30 transition-all duration-700 ease-out origin-bottom animate-lid-hover flex items-center justify-center">
+                    <!-- Ribbon Bow (SVG top) -->
+                    <div class="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-8 flex justify-center">
+                        <svg class="w-full h-full text-amber-400 fill-current drop-shadow-md" viewBox="0 0 100 50">
+                            <path d="M 10 25 C 10 5, 45 5, 45 25 C 45 45, 10 45, 10 25 Z" />
+                            <path d="M 90 25 C 90 5, 55 5, 55 25 C 55 45, 90 45, 90 25 Z" />
+                            <circle cx="50" cy="25" r="10" class="text-amber-300" />
+                        </svg>
+                    </div>
+                    <!-- Ribbon Horizontal Band (under the bow) -->
+                    <div class="w-5 h-full bg-amber-400"></div>
+                </div>
+
+                <!-- Gift Main Body Box -->
+                <div id="gift-body" class="absolute bottom-0 w-full h-[75%] bg-gradient-to-r from-pink-600 to-rose-700 rounded-b-xl shadow-2xl z-20 transition-all duration-700 flex justify-center overflow-hidden border-t border-rose-400/20">
+                    <!-- Vertical Ribbon Ribbon -->
+                    <div class="w-5 h-full bg-amber-400 shadow-inner relative flex justify-center">
+                        <div class="absolute top-0 w-1 h-full bg-amber-300/50"></div>
+                    </div>
+                    <!-- Horizontal Ribbon -->
+                    <div class="absolute top-1/3 w-full h-5 bg-amber-400 shadow-inner"></div>
+                    <!-- Gold Sparkle Overlay on Box -->
+                    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-300/10 via-transparent to-transparent"></div>
+                </div>
+
+                <!-- Glowing Core (seen when lid starts lifting) -->
+                <div class="absolute inset-4 bg-gradient-to-br from-amber-300 to-pink-500 rounded-lg blur-md z-10 opacity-70 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></div>
+            </div>
+            
+            <!-- Opening instructions -->
+            <div class="mt-8 text-center">
+                <span class="text-amber-400 font-semibold tracking-wider text-sm sm:text-base uppercase group-hover:text-amber-300 transition-colors block">Preethi, tap to unwrap</span>
+                <span class="text-pink-200/60 text-xs mt-1 block font-light">Turn up your device volume 🔊</span>
+            </div>
+        </button>
+
+        <!-- Elegant Decorative Footer -->
+        <p class="absolute bottom-6 text-xs text-purple-300/40 tracking-widest uppercase z-10 pointer-events-none">Crafted Specially for You</p>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- STAGE 2: MAIN BIRTHDAY FESTIVAL -->
+    <!-- ========================================== -->
+    <div id="stage-birthday" class="hidden min-h-full flex flex-col justify-between relative z-10 px-4 py-6 sm:px-6 md:px-8 max-w-5xl mx-auto opacity-0 scale-95 transition-all duration-1000 transform">
+        
+        <!-- Header: Main Title -->
+        <header class="text-center py-4 relative">
+            <!-- Small ornamental decoration -->
+            <div class="flex justify-center items-center gap-2 mb-2 text-amber-400/70">
+                <i data-lucide="sparkles" class="w-4 h-4 animate-spin-slow"></i>
+                <span class="w-16 h-[1px] bg-gradient-to-r from-transparent to-amber-400/70"></span>
+                <i data-lucide="gift" class="w-5 h-5 mx-1 animate-bounce"></i>
+                <span class="w-16 h-[1px] bg-gradient-to-l from-transparent to-amber-400/70"></span>
+                <i data-lucide="sparkles" class="w-4 h-4 animate-spin-slow"></i>
+            </div>
+            
+            <!-- Glowing Birthday Title -->
+            <h1 class="serif-title text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight select-none">
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-pink-400 to-rose-300 drop-shadow-lg leading-tight">
+                    Happy Birthday
+                </span>
+                <span class="cursive text-5xl sm:text-7xl md:text-8xl block mt-1 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-rose-300 to-amber-200 drop-shadow-[0_4px_12px_rgba(244,63,94,0.3)] font-medium">
+                    Preethi!
+                </span>
+            </h1>
+        </header>
+
+        <!-- Main Content Area: Blessing Carousel/Cards -->
+        <main class="flex-grow flex flex-col items-center justify-center my-6 max-w-xl mx-auto w-full z-20">
+            
+            <!-- Dynamic Blessing Banner with Interactive Tabs -->
+            <div class="w-full glass-panel-heavy rounded-2xl p-5 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-pink-500/20 relative overflow-hidden">
+                
+                <!-- Glitter light beam in the card background -->
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-pink-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="relative z-10 flex flex-col justify-between h-full min-h-[220px]">
+                    <!-- Blessing Quote Header -->
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs uppercase tracking-widest text-amber-400 font-bold flex items-center gap-1.5">
+                            <i data-lucide="heart" class="w-3.5 h-3.5 fill-amber-400"></i>
+                            A Wish For You
+                        </span>
+                        <!-- Quote Icon -->
+                        <i data-lucide="quote" class="w-7 h-7 text-pink-400/20"></i>
+                    </div>
+
+                    <!-- Dynamic Wishes/Blessings Scroll text -->
+                    <div class="flex-grow flex items-center justify-center my-2">
+                        <div id="blessing-text" class="text-center transition-all duration-500 transform scale-100 opacity-100">
+                            <!-- Populated dynamically via JS -->
+                            <p class="text-lg sm:text-xl font-light text-rose-100/90 leading-relaxed italic">
+                                "May your life be painted with colors of pure joy, your path illuminated with dreams that come alive, and your soul filled with sweet serenity."
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Navigation controls for Blessings -->
+                    <div class="flex items-center justify-between mt-5 pt-4 border-t border-white/5">
+                        <button id="prev-blessing" class="p-2 rounded-full hover:bg-white/10 active:scale-95 transition text-pink-300" aria-label="Previous Blessing">
+                            <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                        </button>
+                        
+                        <!-- Mini dots indicator -->
+                        <div class="flex justify-center gap-1.5" id="blessing-dots">
+                            <!-- Populated dynamically -->
+                        </div>
+
+                        <button id="next-blessing" class="p-2 rounded-full hover:bg-white/10 active:scale-95 transition text-pink-300" aria-label="Next Blessing">
+                            <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Delightful action trigger (Confetti Pop button) -->
+            <button id="pop-more-confetti" class="mt-5 glass-panel hover:bg-pink-500/20 border-pink-400/30 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold tracking-wide text-pink-200 flex items-center gap-2 hover:shadow-[0_0_15px_rgba(244,63,94,0.3)] transition-all duration-300 active:scale-95">
+                <i data-lucide="party-popper" class="w-4 h-4 text-amber-400 animate-bounce"></i>
+                Pop Celebration Confetti! 🎉
+            </button>
+        </main>
+
+        <!-- ========================================== -->
+        <!-- PIANO AT THE BOTTOM -->
+        <!-- ========================================== -->
+        <footer class="w-full mt-auto z-20 pt-4">
+            
+            <!-- Piano Header with Controls -->
+            <div class="glass-panel rounded-2xl p-4 sm:p-5 max-w-3xl mx-auto shadow-2xl relative border-t border-white/10">
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-400 to-pink-500 text-purple-950 px-4 py-0.5 rounded-full text-2xs sm:text-xs font-bold uppercase tracking-widest shadow-md">
+                    ✨ PREETHI'S MAGIC PIANO ✨
+                </div>
+
+                <!-- Mode Control & Song Display Panel -->
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4 mt-2">
+                    <div>
+                        <h3 class="text-sm sm:text-base font-bold text-amber-300 flex items-center gap-1.5 justify-center sm:justify-start">
+                            <i data-lucide="music" class="w-4 h-4 text-pink-400"></i>
+                            <span id="piano-mode-title">Magic Melody Mode</span>
+                        </h3>
+                        <p class="text-rose-200/60 text-3xs sm:text-2xs text-center sm:text-left mt-0.5">
+                            <span id="piano-mode-desc">Tap any key randomly; it automatically plays Happy Birthday!</span>
+                        </p>
+                    </div>
+
+                    <!-- Toggle Mode buttons -->
+                    <div class="flex items-center justify-center gap-2 bg-black/40 p-1 rounded-lg border border-white/5">
+                        <button id="btn-mode-magic" class="px-2.5 py-1 text-2xs font-semibold rounded transition-all bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-md">
+                            Magic Auto
+                        </button>
+                        <button id="btn-mode-free" class="px-2.5 py-1 text-2xs font-semibold rounded text-zinc-400 hover:text-white transition-all">
+                            Free Play
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Lyrics Display Area (Highly responsive for Magic Mode) -->
+                <div class="bg-purple-950/60 border border-pink-500/20 rounded-lg p-2.5 mb-4 text-center min-h-[50px] flex items-center justify-center relative overflow-hidden shadow-inner">
+                    <div class="absolute inset-0 bg-radial from-transparent to-pink-900/10 pointer-events-none"></div>
+                    <div id="lyrics-scroller" class="transition-all duration-300 transform scale-100">
+                        <p id="lyric-word" class="text-base sm:text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-pink-200 to-rose-200 tracking-wide cursive">
+                            🎶 Tap any key to start the melody! 🎶
+                        </p>
+                    </div>
+                </div>
+
+                <!-- The Actual Piano Keys Keyboard -->
+                <!-- Setup for C4-C5 diatonic scale keys to keep it extremely touch friendly and visual -->
+                <div class="relative w-full h-36 sm:h-44 md:h-48 bg-purple-950/80 rounded-lg p-1.5 flex gap-1 shadow-inner select-none overflow-hidden touch-none" id="piano-keyboard">
+                    
+                    <!-- White Keys Container (Flex row) -->
+                    <div class="flex w-full h-full relative z-0">
+                        <!-- Key: C4 -->
+                        <button class="white-key flex-grow h-full bg-slate-50 border-b-8 border-slate-300 hover:bg-slate-100 rounded-b-md transition duration-150 flex flex-col justify-end pb-2 items-center text-slate-800 text-3xs sm:text-2xs font-bold active:bg-amber-100 active:border-amber-400 focus:outline-none shadow-md" data-freq="261.63" data-note="C4" style="flex-basis: 0; flex-grow: 1;">
+                            <span>C4</span>
+                        </button>
+                        <!-- Key: D4 -->
+                        <button class="white-key flex-grow h-full bg-slate-50 border-b-8 border-slate-300 hover:bg-slate-100 rounded-b-md transition duration-150 flex flex-col justify-end pb-2 items-center text-slate-800 text-3xs sm:text-2xs font-bold active:bg-amber-100 active:border-amber-400 focus:outline-none shadow-md" data-freq="293.66" data-note="D4" style="flex-basis: 0; flex-grow: 1;">
+                            <span>D4</span>
+                        </button>
+                        <!-- Key: E4 -->
+                        <button class="white-key flex-grow h-full bg-slate-50 border-b-8 border-slate-300 hover:bg-slate-100 rounded-b-md transition duration-150 flex flex-col justify-end pb-2 items-center text-slate-800 text-3xs sm:text-2xs font-bold active:bg-amber-100 active:border-amber-400 focus:outline-none shadow-md" data-freq="329.63" data-note="E4" style="flex-basis: 0; flex-grow: 1;">
+                            <span>E4</span>
+                        </button>
+                        <!-- Key: F4 -->
+                        <button class="white-key flex-grow h-full bg-slate-50 border-b-8 border-slate-300 hover:bg-slate-100 rounded-b-md transition duration-150 flex flex-col justify-end pb-2 items-center text-slate-800 text-3xs sm:text-2xs font-bold active:bg-amber-100 active:border-amber-400 focus:outline-none shadow-md" data-freq="349.23" data-note="F4" style="flex-basis: 0; flex-grow: 1;">
+                            <span>F4</span>
+                        </button>
+                        <!-- Key: G4 -->
+                        <button class="white-key flex-grow h-full bg-slate-50 border-b-8 border-slate-300 hover:bg-slate-100 rounded-b-md transition duration-150 flex flex-col justify-end pb-2 items-center text-slate-800 text-3xs sm:text-2xs font-bold active:bg-amber-100 active:border-amber-400 focus:outline-none shadow-md" data-freq="392.00" data-note="G4" style="flex-basis: 0; flex-grow: 1;">
+                            <span>G4</span>
+                        </button>
+                        <!-- Key: A4 -->
+                        <button class="white-key flex-grow h-full bg-slate-50 border-b-8 border-slate-300 hover:bg-slate-100 rounded-b-md transition duration-150 flex flex-col justify-end pb-2 items-center text-slate-800 text-3xs sm:text-2xs font-bold active:bg-amber-100 active:border-amber-400 focus:outline-none shadow-md" data-freq="440.00" data-note="A4" style="flex-basis: 0; flex-grow: 1;">
+                            <span>A4</span>
+                        </button>
+                        <!-- Key: B4 -->
+                        <button class="white-key flex-grow h-full bg-slate-50 border-b-8 border-slate-300 hover:bg-slate-100 rounded-b-md transition duration-150 flex flex-col justify-end pb-2 items-center text-slate-800 text-3xs sm:text-2xs font-bold active:bg-amber-100 active:border-amber-400 focus:outline-none shadow-md" data-freq="493.88" data-note="B4" style="flex-basis: 0; flex-grow: 1;">
+                            <span>B4</span>
+                        </button>
+                        <!-- Key: C5 -->
+                        <button class="white-key flex-grow h-full bg-slate-50 border-b-8 border-slate-300 hover:bg-slate-100 rounded-b-md transition duration-150 flex flex-col justify-end pb-2 items-center text-slate-800 text-3xs sm:text-2xs font-bold active:bg-amber-100 active:border-amber-400 focus:outline-none shadow-md" data-freq="523.25" data-note="C5" style="flex-basis: 0; flex-grow: 1;">
+                            <span>C5</span>
+                        </button>
+                        <!-- Key: D5 (Extra for melody flexibility) -->
+                        <button class="white-key flex-grow h-full bg-slate-50 border-b-8 border-slate-300 hover:bg-slate-100 rounded-b-md transition duration-150 flex flex-col justify-end pb-2 items-center text-slate-800 text-3xs sm:text-2xs font-bold active:bg-amber-100 active:border-amber-400 focus:outline-none shadow-md" data-freq="587.33" data-note="D5" style="flex-basis: 0; flex-grow: 1;">
+                            <span>D5</span>
+                        </button>
+                    </div>
+
+                    <!-- Black Keys Overlay (Positioned Absolute relative to keyboard size) -->
+                    <!-- C#4 -->
+                    <button class="black-key absolute top-0 w-[9%] h-[60%] bg-zinc-900 border-b-6 border-zinc-700 hover:bg-zinc-800 rounded-b transition duration-150 flex flex-col justify-end pb-1.5 items-center text-white text-4xs font-bold active:bg-amber-500 active:border-amber-600 focus:outline-none z-10 shadow-lg" data-freq="277.18" data-note="C#4" style="left: 8.5%;"></button>
+                    <!-- D#4 -->
+                    <button class="black-key absolute top-0 w-[9%] h-[60%] bg-zinc-900 border-b-6 border-zinc-700 hover:bg-zinc-800 rounded-b transition duration-150 flex flex-col justify-end pb-1.5 items-center text-white text-4xs font-bold active:bg-amber-500 active:border-amber-600 focus:outline-none z-10 shadow-lg" data-freq="311.13" data-note="D#4" style="left: 19.5%;"></button>
+                    <!-- F#4 -->
+                    <button class="black-key absolute top-0 w-[9%] h-[60%] bg-zinc-900 border-b-6 border-zinc-700 hover:bg-zinc-800 rounded-b transition duration-150 flex flex-col justify-end pb-1.5 items-center text-white text-4xs font-bold active:bg-amber-500 active:border-amber-600 focus:outline-none z-10 shadow-lg" data-freq="369.99" data-note="F#4" style="left: 41.5%;"></button>
+                    <!-- G#4 -->
+                    <button class="black-key absolute top-0 w-[9%] h-[60%] bg-zinc-900 border-b-6 border-zinc-700 hover:bg-zinc-800 rounded-b transition duration-150 flex flex-col justify-end pb-1.5 items-center text-white text-4xs font-bold active:bg-amber-500 active:border-amber-600 focus:outline-none z-10 shadow-lg" data-freq="415.30" data-note="G#4" style="left: 52.5%;"></button>
+                    <!-- A#4 / Bb4 (We use 466.16 for melody) -->
+                    <button class="black-key absolute top-0 w-[9%] h-[60%] bg-zinc-900 border-b-6 border-zinc-700 hover:bg-zinc-800 rounded-b transition duration-150 flex flex-col justify-end pb-1.5 items-center text-white text-4xs font-bold active:bg-amber-500 active:border-amber-600 focus:outline-none z-10 shadow-lg" data-freq="466.16" data-note="Bb4" style="left: 63.5%;"></button>
+                </div>
+                
+                <!-- Gentle instructions helper -->
+                <p class="text-center text-rose-300/30 text-4xs uppercase tracking-widest mt-2 pointer-events-none">Designed for multi-touch & click inputs</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Background Music Toggle Panel (discreet floating top right on Stage 2) -->
+    <div id="ambient-audio-controls" class="hidden fixed top-4 right-4 z-30 flex items-center gap-2">
+        <button id="toggle-bg-chime" class="glass-panel p-2 rounded-full text-pink-300 hover:text-white active:scale-95 transition-all">
+            <i data-lucide="music-4" id="audio-icon-status" class="w-4 h-4"></i>
+        </button>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT & LOGIC PORTION -->
+    <!-- ========================================== -->
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Audio Synthesis Engine Setup
+        let audioCtx = null;
+        let ambientSynthInterval = null;
+        let isMuted = false;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                // Compatibility setup
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContextClass();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        // Custom premium Toy Piano Synth instrument
+        function playSynthesizedNote(frequency, duration = 0.6) {
+            try {
+                const ctx = getAudioContext();
+                const now = ctx.currentTime;
+
+                // Main synthesizer node network
+                const osc1 = ctx.createOscillator();
+                const osc2 = ctx.createOscillator();
+                const gainNode = ctx.createGain();
+                const filterNode = ctx.createBiquadFilter();
+
+                // Setup Osc 1 (Sine wave for sweet pure base note)
+                osc1.type = 'triangle';
+                osc1.frequency.setValueAtTime(frequency, now);
+
+                // Setup Osc 2 (Subtle second harmonic for sweet chiming bell overlay)
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(frequency * 2, now);
+
+                // Setup sweet plucky filter envelope
+                filterNode.type = 'lowpass';
+                filterNode.Q.setValueAtTime(1, now);
+                filterNode.frequency.setValueAtTime(1200, now);
+                filterNode.frequency.exponentialRampToValueAtTime(300, now + duration);
+
+                // Sound Gain envelope (Pluck style: fast attack, logarithmic decay)
+                gainNode.gain.setValueAtTime(0, now);
+                gainNode.gain.linearRampToValueAtTime(0.35, now + 0.01); // Instant loud strike
+                gainNode.gain.exponentialRampToValueAtTime(0.001, now + duration); // Slow ring out
+
+                // Connections
+                osc1.connect(filterNode);
+                osc2.connect(filterNode);
+                
+                // Low level blending of the overtone
+                const overtoneGain = ctx.createGain();
+                overtoneGain.gain.setValueAtTime(0.12, now);
+                osc2.disconnect(filterNode); // separate path
+                osc2.connect(overtoneGain);
+                overtoneGain.connect(filterNode);
+
+                filterNode.connect(gainNode);
+                gainNode.connect(ctx.destination);
+
+                // Playback
+                osc1.start(now);
+                osc2.start(now);
+                osc1.stop(now + duration + 0.1);
+                osc2.stop(now + duration + 0.1);
+
+            } catch (err) {
+                console.error("Audio Synthesis error: ", err);
+            }
+        }
+
+        // Play custom success/opening chime effect
+        function playGiftOpeningFanfare() {
+            try {
+                const ctx = getAudioContext();
+                const now = ctx.currentTime;
+                // Quick rising cute arpeggio
+                const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, idx) => {
+                    setTimeout(() => {
+                        playSynthesizedNote(freq, 0.8);
+                    }, idx * 100);
+                });
+            } catch (e) {}
+        }
+
+        // ==========================================
+        // MAGIC MELODY TRACKING & SONG SETUP
+        // ==========================================
+        const melody = [
+            { note: "C4", freq: 261.63, lyric: "Hap-" },
+            { note: "C4", freq: 261.63, lyric: "py " },
+            { note: "D4", freq: 293.66, lyric: "Birth-" },
+            { note: "C4", freq: 261.63, lyric: "day " },
+            { note: "F4", freq: 349.23, lyric: "to " },
+            { note: "E4", freq: 329.63, lyric: "you, ✨" },
+            
+            { note: "C4", freq: 261.63, lyric: "Hap-" },
+            { note: "C4", freq: 261.63, lyric: "py " },
+            { note: "D4", freq: 293.66, lyric: "Birth-" },
+            { note: "C4", freq: 261.63, lyric: "day " },
+            { note: "G4", freq: 392.00, lyric: "to " },
+            { note: "F4", freq: 349.23, lyric: "you! 💕" },
+            
+            { note: "C4", freq: 261.63, lyric: "Hap-" },
+            { note: "C4", freq: 261.63, lyric: "py " },
+            { note: "C5", freq: 523.25, lyric: "Birth-" },
+            { note: "A4", freq: 440.00, lyric: "day " },
+            { note: "F4", freq: 349.23, lyric: "Dear " },
+            { note: "E4", freq: 329.63, lyric: "Pree-" },
+            { note: "D4", freq: 293.66, lyric: "thi! 👸" },
+            
+            { note: "Bb4", freq: 466.16, lyric: "Hap-" },
+            { note: "Bb4", freq: 466.16, lyric: "py " },
+            { note: "A4", freq: 440.00, lyric: "Birth-" },
+            { note: "F4", freq: 349.23, lyric: "day " },
+            { note: "G4", freq: 392.00, lyric: "to " },
+            { note: "F4", freq: 349.23, lyric: "you! 💖💐" }
+        ];
+
+        let currentMelodyIndex = 0;
+        let isMagicMode = true;
+
+        // Display current state
+        function updateLyricScroller(lyricText) {
+            const scroller = document.getElementById('lyrics-scroller');
+            const wordEl = document.getElementById('lyric-word');
+            
+            // Pulse animation on lyric change
+            scroller.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                wordEl.innerText = lyricText;
+                scroller.classList.remove('scale-95', 'opacity-0');
+                scroller.classList.add('scale-105');
+                setTimeout(() => scroller.classList.remove('scale-105'), 150);
+            }, 100);
+        }
+
+        // ==========================================
+        // BLESSINGS SCROLL DATA & ROTATION
+        // ==========================================
+        const blessings = [
+            "\"May your life be painted with colors of pure joy, your path illuminated with dreams that come alive, and your soul filled with sweet serenity, Preethi.\"",
+            "\"Wishing you endless moments of bright laughter, strong friendships that hold you warm, and the simple courage to fly higher than ever before.\"",
+            "\"On your beautiful journey ahead, may every little candle on your cake turn into a shining beacon of health, prosperity, and unconditional love.\"",
+            "\"You deserve all the magic the universe has to offer. May this year unfold chapters of great success, peace of mind, and radiant, boundless happiness.\"",
+            "\"May sweet surprises meet you around every corner, and may your gorgeous smile continue to brighten up every room you walk into!\""
+        ];
+
+        let currentBlessingIdx = 0;
+
+        function updateBlessingDisplay() {
+            const textEl = document.getElementById('blessing-text');
+            const dotContainer = document.getElementById('blessing-dots');
+            
+            textEl.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                textEl.innerHTML = `<p class="text-base sm:text-lg md:text-xl font-light text-rose-100/95 leading-relaxed italic">${blessings[currentBlessingIdx]}</p>`;
+                textEl.classList.remove('scale-95', 'opacity-0');
+                
+                // Update indicator dots active state
+                const dots = dotContainer.querySelectorAll('div');
+                dots.forEach((dot, idx) => {
+                    if (idx === currentBlessingIdx) {
+                        dot.className = "w-4 h-1.5 rounded-full bg-pink-500 transition-all duration-300";
+                    } else {
+                        dot.className = "w-1.5 h-1.5 rounded-full bg-white/20 transition-all duration-300";
+                    }
+                });
+            }, 300);
+        }
+
+        // Initialize dots indicators
+        function setupBlessingDots() {
+            const dotContainer = document.getElementById('blessing-dots');
+            dotContainer.innerHTML = '';
+            blessings.forEach((_, idx) => {
+                const dot = document.createElement('div');
+                dotContainer.appendChild(dot);
+            });
+            updateBlessingDisplay();
+        }
+
+        document.getElementById('prev-blessing').addEventListener('click', () => {
+            currentBlessingIdx = (currentBlessingIdx - 1 + blessings.length) % blessings.length;
+            updateBlessingDisplay();
+        });
+
+        document.getElementById('next-blessing').addEventListener('click', () => {
+            currentBlessingIdx = (currentBlessingIdx + 1) % blessings.length;
+            updateBlessingDisplay();
+        });
+
+
+        // ==========================================
+        // CONFETTI ENGINE (HTML5 Canvas Particles)
+        // ==========================================
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let confettiActive = false;
+        let particles = [];
+        const colors = ['#f43f5e', '#ec4899', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#f472b6', '#fbbf24'];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class ConfettiParticle {
+            constructor(x, y, isExplosion = false) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 8 + 6;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                
+                if (isExplosion) {
+                    // Fast scattering explosion
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = Math.random() * 12 + 6;
+                    this.speedX = Math.cos(angle) * speed;
+                    this.speedY = Math.sin(angle) * speed - (Math.random() * 4);
+                } else {
+                    // Gentle wind fallback
+                    this.speedX = Math.random() * 4 - 2;
+                    this.speedY = Math.random() * 5 + 2;
+                }
+                
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 10 - 5;
+                this.opacity = 1;
+                this.decay = Math.random() * 0.015 + 0.005;
+                this.shape = Math.random() > 0.5 ? 'circle' : 'square';
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.speedY += 0.1; // gravity
+                this.speedX *= 0.98; // friction
+                this.rotation += this.rotationSpeed;
+                this.opacity -= this.decay;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.fillStyle = this.color;
+
+                if (this.shape === 'circle') {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+                }
+                ctx.restore();
+            }
+        }
+
+        function triggerConfettiShower(x, y, count = 100, isExplosion = true) {
+            getAudioContext(); // Wake up context
+            confettiActive = true;
+            for (let i = 0; i < count; i++) {
+                particles.push(new ConfettiParticle(x, y, isExplosion));
+            }
+        }
+
+        function animateConfetti() {
+            if (!confettiActive) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Filter dead particles
+            particles = particles.filter(p => p.opacity > 0 && p.y < canvas.height + 20);
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animateConfetti);
+        }
+
+        // Trigger loop helper
+        document.getElementById('pop-more-confetti').addEventListener('click', (e) => {
+            const rect = e.target.getBoundingClientRect();
+            triggerConfettiShower(rect.left + rect.width/2, rect.top + window.scrollY, 60, true);
+            animateConfetti();
+            playSynthesizedNote(523.25, 0.3); // High ping
+        });
+
+        // ==========================================
+        // BALLOONS SPARKING & DRIFT SYSTEM
+        // ==========================================
+        function spawnBalloon() {
+            const container = document.getElementById('balloons-container');
+            const balloon = document.createElement('div');
+            
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            const size = Math.random() * 40 + 40; // size 40px to 80px
+            const startX = Math.random() * 100; // viewport width %
+            const duration = Math.random() * 8 + 7; // speed
+            
+            balloon.className = "absolute bottom-[-100px] rounded-full pointer-events-none transition-transform z-10 opacity-70";
+            balloon.style.left = `${startX}vw`;
+            balloon.style.width = `${size}px`;
+            balloon.style.height = `${size * 1.2}px`;
+            balloon.style.backgroundColor = randomColor;
+            balloon.style.boxShadow = `inset -8px -8px 15px rgba(0,0,0,0.2), 0 10px 20px rgba(0,0,0,0.15), inset 4px 4px 10px rgba(255,255,255,0.4)`;
+            
+            // String element on the balloon
+            const string = document.createElement('div');
+            string.style.width = '2px';
+            string.style.height = '40px';
+            string.style.background = 'rgba(255,255,255,0.25)';
+            string.style.position = 'absolute';
+            string.style.bottom = '-40px';
+            string.style.left = '50%';
+            string.style.transform = 'translateX(-50%)';
+            balloon.appendChild(string);
+
+            container.appendChild(balloon);
+
+            // Animate moving up using simple keyframe-less approach
+            let currentY = 0;
+            let currentX = 0;
+            const driftIntensity = Math.random() * 2 - 1;
+            
+            const interval = setInterval(() => {
+                currentY += 1.8;
+                currentX += Math.sin(currentY / 30) * driftIntensity;
+                balloon.style.transform = `translate(${currentX}px, -${currentY}px)`;
+                
+                if (currentY > window.innerHeight + 200) {
+                    clearInterval(interval);
+                    balloon.remove();
+                }
+            }, 16);
+        }
+
+        // Spawn ambient balloons intermittently on Stage 2
+        function startAmbientBalloons() {
+            setInterval(() => {
+                if (document.getElementById('stage-birthday').classList.contains('opacity-0') === false) {
+                    spawnBalloon();
+                }
+            }, 2500);
+        }
+
+        // ==========================================
+        // GIFT WRAPPING OPEN EXPERIENCE
+        // ==========================================
+        const giftButton = document.getElementById('gift-box-btn');
+        const giftLid = document.getElementById('gift-lid');
+        const giftBody = document.getElementById('gift-body');
+        const stageGift = document.getElementById('stage-gift');
+        const stageBirthday = document.getElementById('stage-birthday');
+
+        giftButton.addEventListener('click', () => {
+            // Activate Audio Context on initial touch
+            getAudioContext();
+
+            // Animate Gift Lid flying off
+            giftLid.style.transform = 'translateY(-120px) rotate(25deg) scale(0.9)';
+            giftLid.style.opacity = '0';
+            
+            // Body subtle swell then shrink/fade
+            giftBody.style.transform = 'scale(1.15)';
+            setTimeout(() => {
+                giftBody.style.transform = 'scale(0)';
+                giftBody.style.opacity = '0';
+            }, 300);
+
+            // Trigger beautiful sound FX sequence
+            playGiftOpeningFanfare();
+
+            // Trigger instant multi-origin massive confetti shower!
+            setTimeout(() => {
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                
+                // Blast from center, left side, and right side
+                triggerConfettiShower(centerX, centerY, 80, true);
+                triggerConfettiShower(centerX - 150, centerY + 100, 45, true);
+                triggerConfettiShower(centerX + 150, centerY + 100, 45, true);
+                
+                animateConfetti();
+
+                // Spawn multiple initial balloons
+                for (let i = 0; i < 12; i++) {
+                    setTimeout(spawnBalloon, i * 250);
+                }
+
+                // Smoothly switch Stages
+                stageGift.style.opacity = '0';
+                setTimeout(() => {
+                    stageGift.classList.add('hidden');
+                    stageBirthday.classList.remove('hidden');
+                    
+                    // Trigger reflow
+                    stageBirthday.offsetHeight;
+                    
+                    stageBirthday.classList.remove('opacity-0', 'scale-95');
+                    stageBirthday.classList.add('opacity-100', 'scale-100');
+                    
+                    // Initialize scroll/widgets inside stage 2
+                    setupBlessingDots();
+                    startAmbientBalloons();
+                }, 800);
+
+            }, 400);
+        });
+
+
+        // ==========================================
+        // PIANO FUNCTIONALITIES
+        // ==========================================
+        const keys = document.querySelectorAll('.white-key, .black-key');
+        const btnModeMagic = document.getElementById('btn-mode-magic');
+        const btnModeFree = document.getElementById('btn-mode-free');
+        const pianoModeTitle = document.getElementById('piano-mode-title');
+        const pianoModeDesc = document.getElementById('piano-mode-desc');
+
+        // Mode Switching
+        btnModeMagic.addEventListener('click', () => {
+            isMagicMode = true;
+            btnModeMagic.className = "px-2.5 py-1 text-2xs font-semibold rounded transition-all bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-md";
+            btnModeFree.className = "px-2.5 py-1 text-2xs font-semibold rounded text-zinc-400 hover:text-white transition-all";
+            pianoModeTitle.innerText = "Magic Melody Mode";
+            pianoModeDesc.innerText = "Tap any key randomly; it automatically plays Happy Birthday!";
+            updateLyricScroller("✨ Ready to play! Press any key! ✨");
+            currentMelodyIndex = 0;
+        });
+
+        btnModeFree.addEventListener('click', () => {
+            isMagicMode = false;
+            btnModeFree.className = "px-2.5 py-1 text-2xs font-semibold rounded transition-all bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow-md";
+            btnModeMagic.className = "px-2.5 py-1 text-2xs font-semibold rounded text-zinc-400 hover:text-white transition-all";
+            pianoModeTitle.innerText = "Free Play Mode";
+            pianoModeDesc.innerText = "Play standard chords or your own melodies freely.";
+            updateLyricScroller("🎹 Play anything you love!");
+        });
+
+        // Trigger Key Play
+        function triggerKeyPlay(keyElement) {
+            const defaultFreq = parseFloat(keyElement.getAttribute('data-freq'));
+            const defaultNote = keyElement.getAttribute('data-note');
+
+            if (isMagicMode) {
+                // Play magic Happy Birthday note sequence in order, ignoring key's default pitch
+                const currentMelodyStep = melody[currentMelodyIndex];
+                playSynthesizedNote(currentMelodyStep.freq, 0.7);
+                updateLyricScroller(currentMelodyStep.lyric);
+                
+                // Visual key guide - Light up the actual key mapped to the melody note played!
+                highlightTargetKey(currentMelodyStep.note);
+
+                // Progress melody loop
+                currentMelodyIndex = (currentMelodyIndex + 1) % melody.length;
+                
+                // Tiny sparkle blast from the key pressed
+                const rect = keyElement.getBoundingClientRect();
+                triggerConfettiShower(rect.left + rect.width/2, rect.top, 5, false);
+                animateConfetti();
+
+            } else {
+                // Free Play Mode: Play the exact matching key frequency
+                playSynthesizedNote(defaultFreq, 0.6);
+                updateLyricScroller(`Note Played: ${defaultNote}`);
+            }
+
+            // Keyboard visual tap feedback
+            keyElement.classList.add('bg-amber-100', 'border-amber-400', 'scale-[0.98]');
+            setTimeout(() => {
+                keyElement.classList.remove('bg-amber-100', 'border-amber-400', 'scale-[0.98]');
+            }, 150);
+        }
+
+        // Highlight matching visual piano keys on screen during magic auto-playing
+        function highlightTargetKey(noteName) {
+            keys.forEach(key => {
+                if (key.getAttribute('data-note') === noteName) {
+                    key.classList.add('ring-2', 'ring-pink-400', 'ring-offset-2', 'ring-offset-purple-950');
+                    setTimeout(() => {
+                        key.classList.remove('ring-2', 'ring-pink-400', 'ring-offset-2', 'ring-offset-purple-950');
+                    }, 350);
+                }
+            });
+        }
+
+        // Handle Touch and Pointer down smoothly (no latency mobile play)
+        keys.forEach(key => {
+            key.addEventListener('pointerdown', (e) => {
+                e.preventDefault();
+                triggerKeyPlay(key);
+            });
+        });
+
+        // Prevent zoom scaling/double tap scrolling conflicts on fast touch playing
+        const pianoKeyboard = document.getElementById('piano-keyboard');
+        pianoKeyboard.addEventListener('touchstart', (e) => {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+
+        // ==========================================
+        // BACKGROUND DECORATION SYSTEM (Golden Stars)
+        // ==========================================
+        function createAmbientSparkles() {
+            const container = document.getElementById('ambient-sparkles');
+            const particleCount = 25;
+            for (let i = 0; i < particleCount; i++) {
+                const sparkle = document.createElement('div');
+                const size = Math.random() * 3 + 2;
+                const topPos = Math.random() * 100;
+                const leftPos = Math.random() * 100;
+                const delay = Math.random() * 4;
+
+                sparkle.className = "absolute bg-white rounded-full sparkle-dot pointer-events-none opacity-40 shadow-xl";
+                sparkle.style.width = `${size}px`;
+                sparkle.style.height = `${size}px`;
+                sparkle.style.top = `${topPos}%`;
+                sparkle.style.left = `${leftPos}%`;
+                sparkle.style.animationDelay = `${delay}s`;
+                // custom random colors
+                sparkle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                container.appendChild(sparkle);
+            }
+        }
+        createAmbientSparkles();
+
+    </script>
+</body>
+</html>
